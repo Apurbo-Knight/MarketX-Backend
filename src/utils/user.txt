@@ -1,0 +1,16 @@
+Step-1: create a user model
+1. Username: 
+2. email
+3. password
+4. profile image
+5. bio
+6. profession
+7. role
+
+______________________
+Step-2: create routes for user
+get: get info from DB
+post: post data from front to DB
+put: update or edit data
+delete: delete info from DB
+patch: update data partially
