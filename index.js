@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://market-x-frontend.vercel.app/'],
+  origin: ['http://localhost:5173', 'https://market-x-frontend.vercel.app'],
   credentials: true
 }))
 
