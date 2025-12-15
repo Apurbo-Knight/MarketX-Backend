@@ -14,10 +14,10 @@ router.get('/', getAllProducts)
 router.get('/:id', getSingleProduct)
 
 // update product (only admin)
-router.patch('/update-product/:id',verifyToken,verifyToken, updateProductById)
+router.patch('/update-product/:id',verifyToken,verifyAdmin, updateProductById)
 
 // delete product by id
-router.delete('/delete-product/:id',verifyToken,verifyToken, deleteProductById)
+router.delete('/delete-product/:id',verifyToken,verifyAdmin, deleteProductById)
 
 
 module.exports = router;
