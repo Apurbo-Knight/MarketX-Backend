@@ -1,9 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const cors = require('cors');
-require("dotenv").config();
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 
@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: ['http://localhost:5173', 'https://market-x-frontend.vercel.app/'],
   credentials: true
 }))
 
