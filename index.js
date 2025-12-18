@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors({
   origin: ['http://localhost:5173', 'https://market-x-frontend.vercel.app'],
-  credentials: "include"
+  credentials: true
 }))
 
 const UploadImage = require("./src/utils/UploadImage")
