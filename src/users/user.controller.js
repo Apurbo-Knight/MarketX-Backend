@@ -21,7 +21,7 @@ const userLoggedIn = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      errorResponse(res, 404, "User not found");
+     return errorResponse(res, 404, "User not found");
     }
 
     const isMatch = await user.comparePassword(password);
@@ -30,9 +30,13 @@ const userLoggedIn = async (req, res) => {
       return res.status(401).send({ message: "Invalid password" });
     }
     const token = await generateToken(user._id);
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true, // REQUIRED on Vercel
+      sameSite: "none", // REQUIRED for cross-domain
+    });
     res.status(200).send({
-      message: "Login in successfull",
+      message: "Login successfull",
       token,
       user: {
         _id: user._id,
@@ -53,7 +57,11 @@ const userLoggedIn = async (req, res) => {
 // logout function
 const userLogout = async (req, res) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
     res.status(200).send({ message: "Successfully logged out" });
   } catch (error) {
@@ -101,7 +109,7 @@ const updateUserRole = async (req, res) => {
       { new: true }
     );
     if (!updatedUser) {
-      return errorResponse(res, 500, "User not found", error);
+      return errorResponse(res, 404, "User not found", error);
     }
     return successResponse(
       res,
@@ -132,8 +140,12 @@ const editUserProfile = async (req, res) => {
       return errorResponse(res, 404, "user mot found", error);
     }
 
-    return successResponse(res, 200, "User profile updated  successfully",updatedUser);
-
+    return successResponse(
+      res,
+      200,
+      "User profile updated  successfully",
+      updatedUser
+    );
   } catch (error) {
     errorResponse(res, 500, "Field to update the user profile", error);
   }
